@@ -123,25 +123,27 @@
       border-radius: 6px;
     }
 
-    /* SWISH QR IMAGE */
+    /* QR BOX ANIMATION */
     .qr-box {
-      display: none;
       margin-top: 15px;
       opacity: 0;
-      transform: scale(0.9);
-      transition: 0.25s ease;
+      transform: scale(0.85);
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .qr-box.show {
-      display: block;
       opacity: 1;
       transform: scale(1);
+      max-height: 300px;
     }
 
     .qr-box img {
       width: 200px;
       border-radius: 10px;
     }
+
   </style>
 </head>
 
@@ -214,7 +216,6 @@ function showPage(page) {
   document.getElementById(page + "Btn").classList.add('active');
 }
 
-/* DONATE OPEN/CLOSE */
 function openDonate() {
   document.getElementById("overlay").style.display = "flex";
 }
@@ -223,7 +224,6 @@ function closeDonate() {
   document.getElementById("overlay").style.display = "none";
 }
 
-/* SWITCH METHOD */
 function updateDonate() {
   let method = document.getElementById("method").value;
 
