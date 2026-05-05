@@ -3,7 +3,6 @@
 <head>
   <title>Pixel forg</title>
 
-  <!-- Cool font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -14,65 +13,113 @@
       color: white;
     }
 
-    /* Top hero section */
+    /* TOP NAV */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+      background: #0b0b0f;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    .nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding-bottom: 5px;
+    }
+
+    .active {
+      border-bottom: 2px solid white;
+    }
+
+    /* HERO */
     .hero {
-      height: 60vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-
-      /* cool gradient background */
-      background: linear-gradient(
-        135deg,
-        #0f1020,
-        #1a1b3a,
-        #0b0b0f
-      );
-    }
-
-    h1 {
-      font-size: 64px;
-      margin: 0;
-      letter-spacing: 3px;
-    }
-
-    p {
-      margin-top: 10px;
-      color: #bbbbbb;
-    }
-
-    /* future game section */
-    .content {
-      padding: 40px;
+      background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
       text-align: center;
     }
 
-    .card {
-      margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #333;
-      border-radius: 12px;
-      display: inline-block;
-      background: #151525;
+    h1 {
+      font-size: 70px;
+      margin: 0;
+    }
+
+    /* CONTENT PAGES */
+    .page {
+      display: none;
+      padding-top: 120px;
+      text-align: center;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .black {
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
 
 <body>
 
+<!-- NAV -->
+<div class="nav">
+  <button id="homeBtn" class="active" onclick="showPage('home')">Home</button>
+  <button id="gamesBtn" onclick="showPage('games')">Games</button>
+  <button id="shopBtn" onclick="showPage('shop')">Shop</button>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page show">
   <div class="hero">
     <h1>Pixel forg</h1>
-    <p>Indie 2D & pixel games coming soon</p>
   </div>
+</div>
 
-  <div class="content">
-    <h2>🔥 My Games</h2>
-
-    <div class="card">
-      <p>No games yet — but something cool is coming 👀</p>
-    </div>
+<!-- GAMES -->
+<div id="games" class="page">
+  <div class="black">
+    <h1>Games</h1>
   </div>
+</div>
+
+<!-- SHOP -->
+<div id="shop" class="page">
+  <div class="black">
+    <h1>Shop</h1>
+  </div>
+</div>
+
+<script>
+  function showPage(page) {
+    // hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+
+    // show selected page
+    document.getElementById(page).classList.add('show');
+
+    // remove active underline
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
+    // add active underline
+    document.getElementById(page + "Btn").classList.add('active');
+  }
+</script>
 
 </body>
 </html>
