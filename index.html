@@ -9,20 +9,19 @@
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: black;
       color: white;
     }
 
-    /* NAV */
+    /* TOP NAV */
     .nav {
       display: flex;
       justify-content: center;
       gap: 40px;
       padding: 20px;
-      position: fixed;
-      width: 100%;
-      top: 0;
       background: black;
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
 
     .nav button {
@@ -31,6 +30,12 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
+      padding-bottom: 6px;
+    }
+
+    /* WHITE LINE UNDER ACTIVE PAGE */
+    .active {
+      border-bottom: 2px solid white;
     }
 
     /* PAGES */
@@ -44,13 +49,13 @@
       display: block;
     }
 
-    /* HOME HERO ONLY (small background area) */
+    /* COOL BACKGROUND FOR ALL PAGES */
     .hero {
-      margin: 80px auto 0;
-      width: 100%;
-      max-width: 900px;
-      padding: 80px 20px;
-      border-radius: 20px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
 
       background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
     }
@@ -61,7 +66,7 @@
     }
 
     .simple {
-      font-size: 30px;
+      font-size: 40px;
       margin-top: 40px;
     }
   </style>
@@ -71,9 +76,9 @@
 
 <!-- NAV -->
 <div class="nav">
-  <button onclick="showPage('home')">Home</button>
-  <button onclick="showPage('games')">Games</button>
-  <button onclick="showPage('shop')">Shop</button>
+  <button id="homeBtn" class="active" onclick="showPage('home')">Home</button>
+  <button id="gamesBtn" onclick="showPage('games')">Games</button>
+  <button id="shopBtn" onclick="showPage('shop')">Shop</button>
 </div>
 
 <!-- HOME -->
@@ -85,18 +90,29 @@
 
 <!-- GAMES -->
 <div id="games" class="page">
-  <div class="simple">Games</div>
+  <div class="hero">
+    <div class="simple">Games</div>
+  </div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-  <div class="simple">Shop</div>
+  <div class="hero">
+    <div class="simple">Shop</div>
+  </div>
 </div>
 
 <script>
   function showPage(page) {
+    // hide pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
     document.getElementById(page).classList.add('show');
+
+    // remove active underline
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
+    // add active underline to current button
+    document.getElementById(page + "Btn").classList.add('active');
   }
 </script>
 
