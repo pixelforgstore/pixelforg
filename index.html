@@ -1,122 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pixel forg</title>
+<meta charset="UTF-8">
+<title>Pixel Forge</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+/* TOP BAR */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    background: black;
+    padding: 20px 0;
+    position: relative;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      color: white;
-      background: black;
-    }
+.nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 10px;
+}
 
-    /* NAV BAR */
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      padding: 20px;
-      background: black;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-    }
+/* underline for active page */
+.nav button.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: white;
+}
 
-    .nav button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      position: relative;
-      padding: 10px 0;
-    }
+/* HERO HOME */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
 
-    /* ONLY SMALL WHITE LINE UNDER ACTIVE TAB */
-    .nav button.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      background: white;
-    }
+.hero h1 {
+    font-size: 70px;
+    margin: 0;
+    font-weight: bold;
+}
 
-    /* PAGES */
-    .page {
-      display: none;
-      padding-top: 80px; /* smaller so no extra gap/line look */
-      text-align: center;
-    }
+/* GAMES GRID */
+.games {
+    display: none;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
 
-    .show {
-      display: block;
-    }
+.game-card {
+    background: #1c1c1c;
+    padding: 10px;
+    border-radius: 10px;
+}
 
-    /* HERO BACKGROUND */
-    .hero {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
-    }
+.game-card img {
+    width: 100%;
+    border-radius: 10px;
+}
 
-    h1 {
-      font-size: 70px;
-      margin: 0;
-    }
+.game-title {
+    margin-top: 10px;
+    font-size: 16px;
+}
 
-    .simple {
-      font-size: 40px;
-    }
-  </style>
+.price {
+    color: #00ff88;
+}
+
+/* SHOP / HOME / GAMES PAGES */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+</style>
 </head>
-
 <body>
 
-<!-- NAV -->
 <div class="nav">
-  <button id="homeBtn" class="active" onclick="showPage('home')">Home</button>
-  <button id="gamesBtn" onclick="showPage('games')">Games</button>
-  <button id="shopBtn" onclick="showPage('shop')">Shop</button>
+    <button class="active" onclick="showPage('home', this)">Home</button>
+    <button onclick="showPage('games', this)">Games</button>
+    <button onclick="showPage('shop', this)">Shop</button>
 </div>
 
 <!-- HOME -->
-<div id="home" class="page show">
-  <div class="hero">
-    <h1>Pixel forg</h1>
-  </div>
+<div id="home" class="page active">
+    <div class="hero">
+        <h1>Pixel Forge</h1>
+    </div>
 </div>
 
 <!-- GAMES -->
 <div id="games" class="page">
-  <div class="hero">
-    <div class="simple">Games</div>
-  </div>
+    <div class="games">
+        <div class="game-card">
+            <img src="https://via.placeholder.com/300x180" alt="">
+            <div class="game-title">Cool Game 1</div>
+            <div class="price">$9.99</div>
+        </div>
+
+        <div class="game-card">
+            <img src="https://via.placeholder.com/300x180" alt="">
+            <div class="game-title">Cool Game 2</div>
+            <div class="price">$14.99</div>
+        </div>
+
+        <div class="game-card">
+            <img src="https://via.placeholder.com/300x180" alt="">
+            <div class="game-title">Cool Game 3</div>
+            <div class="price">$4.99</div>
+        </div>
+    </div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-  <div class="hero">
-    <div class="simple">Shop</div>
-  </div>
+    <div class="hero">
+        <h1>Shop</h1>
+    </div>
 </div>
 
 <script>
-  function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
-    document.getElementById(page).classList.add('show');
+function showPage(page, btn) {
+    // pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
 
+    // buttons underline
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(page + "Btn").classList.add('active');
-  }
+    btn.classList.add('active');
+}
 </script>
 
 </body>
