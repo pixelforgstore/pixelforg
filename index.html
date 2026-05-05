@@ -1,151 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Pixel Forge</title>
+  <title>Pixel forg</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
-/* NAV BAR */
-.nav {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    background: black;
-    padding: 20px 0;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      background: black;
+    }
 
-.nav button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    position: relative;
-    padding-bottom: 8px;
-}
+    /* NAV BAR */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      padding: 20px;
+      background: black;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
 
-/* underline only active page */
-.nav button.active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 3px;
-    background: white;
-}
+    .nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      padding: 10px 0;
+    }
 
-/* PAGES */
-.page {
-    display: none;
-}
+    /* ONLY SMALL WHITE LINE UNDER ACTIVE TAB */
+    .nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: white;
+    }
 
-.page.active {
-    display: block;
-}
+    /* PAGES */
+    .page {
+      display: none;
+      padding-top: 80px;
+      text-align: center;
+    }
 
-/* HOME */
-.hero {
-    text-align: center;
-    padding: 80px 20px;
-}
+    .show {
+      display: block;
+    }
 
-.hero h1 {
-    font-size: 70px;
-    margin: 0;
-}
+    /* HERO BACKGROUND */
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
+    }
 
-/* GAMES */
-.games-wrap {
-    padding: 40px;
-}
+    h1 {
+      font-size: 70px;
+      margin: 0;
+    }
 
-.game-card {
-    width: 200px;
-    background: #1a1a1a;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-}
+    .simple {
+      font-size: 40px;
+    }
 
-.game-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-}
+    /* ===== GAME TILE (ADDED) ===== */
+    .game-card {
+      width: 220px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+    }
 
-.game-info {
-    padding: 10px;
-    background: #151515;
-}
+    .game-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+    }
 
-.game-title {
-    font-size: 16px;
-}
+    .game-info {
+      padding: 10px;
+      background: #141414;
+    }
 
-.game-price {
-    font-size: 13px;
-    color: #aaa;
-    margin-top: 4px;
-}
-</style>
+    .title {
+      font-size: 16px;
+    }
+
+    .price {
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 
 <body>
 
 <!-- NAV -->
 <div class="nav">
-    <button class="active" onclick="showPage('home', this)">Home</button>
-    <button onclick="showPage('games', this)">Games</button>
-    <button onclick="showPage('shop', this)">Shop</button>
+  <button id="homeBtn" class="active" onclick="showPage('home')">Home</button>
+  <button id="gamesBtn" onclick="showPage('games')">Games</button>
+  <button id="shopBtn" onclick="showPage('shop')">Shop</button>
 </div>
 
 <!-- HOME -->
-<div id="home" class="page active">
-    <div class="hero">
-        <h1>Pixel Forge</h1>
-    </div>
+<div id="home" class="page show">
+  <div class="hero">
+    <h1>Pixel forg</h1>
+  </div>
 </div>
 
 <!-- GAMES -->
 <div id="games" class="page">
-    <div class="games-wrap">
+  <div class="hero">
 
-        <div class="game-card">
-            <!-- REPLACE THIS IMAGE WITH YOUR OWN -->
-            <img src="YOUR_IMAGE_HERE.jpg" alt="game image">
+    <div class="game-card">
+      <img src="game1.png" alt="Frogga">
 
-            <div class="game-info">
-                <div class="game-title">Frogga</div>
-                <div class="game-price">Free</div>
-            </div>
-        </div>
-
+      <div class="game-info">
+        <div class="title">Frogga</div>
+        <div class="price">Free</div>
+      </div>
     </div>
+
+  </div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-    <div class="hero">
-        <h1>Shop</h1>
-    </div>
+  <div class="hero">
+    <div class="simple">Shop</div>
+  </div>
 </div>
 
 <script>
-function showPage(page, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(page).classList.add('active');
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    document.getElementById(page).classList.add('show');
 
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
+    document.getElementById(page + "Btn").classList.add('active');
+  }
 </script>
 
 </body>
