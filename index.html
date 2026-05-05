@@ -5,6 +5,9 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- QR CODE LIBRARY -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1/qrcode.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -13,7 +16,7 @@
       background: black;
     }
 
-    /* NAV BAR */
+    /* NAV */
     .nav {
       display: flex;
       justify-content: center;
@@ -57,7 +60,6 @@
       display: block;
     }
 
-    /* HERO */
     .hero {
       height: 100vh;
       display: flex;
@@ -104,14 +106,6 @@
       padding: 20px;
       border-radius: 12px;
       position: relative;
-      transform: scale(0.8);
-      opacity: 0;
-      transition: 0.2s ease;
-    }
-
-    .overlay.show .popup {
-      transform: scale(1);
-      opacity: 1;
     }
 
     .close {
@@ -122,7 +116,6 @@
       font-size: 18px;
     }
 
-    /* INPUTS */
     input, select {
       width: 100%;
       padding: 8px;
@@ -131,23 +124,12 @@
       border: 1px solid #333;
       color: white;
       border-radius: 6px;
-      outline: none;
     }
 
-    .preview {
-      margin-top: 10px;
-      color: #aaa;
-    }
-
-    .donate-action {
+    #qrcode {
       margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      background: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
+      display: flex;
+      justify-content: center;
     }
   </style>
 </head>
@@ -174,7 +156,7 @@
 <!-- GAMES -->
 <div id="games" class="page">
   <div class="hero">
-    <h1>Frogga</h1>
+    <h1>Games</h1>
   </div>
 </div>
 
@@ -190,23 +172,16 @@
   <div class="popup">
     <div class="close" onclick="closeDonate()">✕</div>
 
-    <h2>Donate</h2>
+    <h2>Donate (Swish)</h2>
 
-    <input id="amount" type="number" placeholder="Enter amount" oninput="updateCurrency()" />
+    <input id="amount" type="number" placeholder="Enter amount (SEK)" oninput="updateQR()" />
 
-    <select id="currency" onchange="updateCurrency()">
-      <option value="USD">$ USD</option>
-      <option value="EUR">€ EUR</option>
-      <option value="SEK">kr SEK</option>
-    </select>
-
-    <div class="preview" id="preview">0 USD</div>
-
-    <button class="donate-action" onclick="fakeDonate()">Donate</button>
+    <div id="qrcode"></div>
   </div>
 </div>
 
 <script>
+
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
   document.getElementById(page).classList.add('show');
@@ -215,42 +190,37 @@ function showPage(page) {
   document.getElementById(page + "Btn").classList.add('active');
 }
 
-/* DONATE OPEN / CLOSE */
+/* OPEN / CLOSE */
 function openDonate() {
-  const overlay = document.getElementById("overlay");
-  overlay.style.display = "flex";
-  setTimeout(() => overlay.classList.add("show"), 10);
+  document.getElementById("overlay").style.display = "flex";
 }
 
 function closeDonate() {
-  const overlay = document.getElementById("overlay");
-  overlay.classList.remove("show");
-  setTimeout(() => overlay.style.display = "none", 200);
+  document.getElementById("overlay").style.display = "none";
 }
 
-/* LIVE CURRENCY DISPLAY */
-function updateCurrency() {
-  let amount = document.getElementById("amount").value;
-  let currency = document.getElementById("currency").value;
+/* SWISH QR */
+function updateQR() {
+  let amount = document.getElementById("amount").value || 0;
 
-  if (!amount) amount = 0;
+  let swishNumber = "4670XXXXXXX"; // <-- replace with YOUR number
 
-  document.getElementById("preview").innerText =
-    amount + " " + currency;
+  let link =
+    "swish://payment?phone=" +
+    swishNumber +
+    "&amount=" +
+    amount +
+    "&message=PixelForge";
+
+  document.getElementById("qrcode").innerHTML = "";
+
+  new QRCode(document.getElementById("qrcode"), {
+    text: link,
+    width: 180,
+    height: 180
+  });
 }
 
-/* FAKE DONATE (you hook real payment later) */
-function fakeDonate() {
-  let amount = document.getElementById("amount").value;
-  let currency = document.getElementById("currency").value;
-
-  if (!amount || amount <= 0) {
-    alert("Enter a valid amount");
-    return;
-  }
-
-  alert("Donation ready: " + amount + " " + currency + "\n(you will connect payment later)");
-}
 </script>
 
 </body>
