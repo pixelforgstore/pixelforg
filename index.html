@@ -9,20 +9,20 @@
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: #0b0b0f;
+      background: black;
       color: white;
     }
 
-    /* TOP NAV */
+    /* NAV */
     .nav {
       display: flex;
       justify-content: center;
       gap: 40px;
       padding: 20px;
-      background: #0b0b0f;
       position: fixed;
-      top: 0;
       width: 100%;
+      top: 0;
+      background: black;
     }
 
     .nav button {
@@ -31,33 +31,12 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
-      padding-bottom: 5px;
     }
 
-    .active {
-      border-bottom: 2px solid white;
-    }
-
-    /* HERO */
-    .hero {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 70px;
-      margin: 0;
-    }
-
-    /* CONTENT PAGES */
+    /* PAGES */
     .page {
       display: none;
-      padding-top: 120px;
+      padding-top: 100px;
       text-align: center;
     }
 
@@ -65,12 +44,25 @@
       display: block;
     }
 
-    .black {
-      height: 100vh;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* HOME HERO ONLY (small background area) */
+    .hero {
+      margin: 80px auto 0;
+      width: 100%;
+      max-width: 900px;
+      padding: 80px 20px;
+      border-radius: 20px;
+
+      background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
+    }
+
+    h1 {
+      font-size: 70px;
+      margin: 0;
+    }
+
+    .simple {
+      font-size: 30px;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -79,9 +71,9 @@
 
 <!-- NAV -->
 <div class="nav">
-  <button id="homeBtn" class="active" onclick="showPage('home')">Home</button>
-  <button id="gamesBtn" onclick="showPage('games')">Games</button>
-  <button id="shopBtn" onclick="showPage('shop')">Shop</button>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('games')">Games</button>
+  <button onclick="showPage('shop')">Shop</button>
 </div>
 
 <!-- HOME -->
@@ -93,31 +85,18 @@
 
 <!-- GAMES -->
 <div id="games" class="page">
-  <div class="black">
-    <h1>Games</h1>
-  </div>
+  <div class="simple">Games</div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-  <div class="black">
-    <h1>Shop</h1>
-  </div>
+  <div class="simple">Shop</div>
 </div>
 
 <script>
   function showPage(page) {
-    // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
-
-    // show selected page
     document.getElementById(page).classList.add('show');
-
-    // remove active underline
-    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-
-    // add active underline
-    document.getElementById(page + "Btn").classList.add('active');
   }
 </script>
 
