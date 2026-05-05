@@ -116,7 +116,7 @@
       font-size: 18px;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 8px;
       margin-top: 10px;
@@ -199,18 +199,17 @@ function closeDonate() {
   document.getElementById("overlay").style.display = "none";
 }
 
-/* SWISH QR */
+/* SWISH QR (SAFE WORKING VERSION) */
 function updateQR() {
   let amount = document.getElementById("amount").value || 0;
 
-  let swishNumber = "4670XXXXXXX"; // <-- replace with YOUR number
+  let swishNumber = "4670XXXXXXX"; // YOUR SWISH NUMBER
 
+  // SAFE UNIVERSAL SWISH LINK (NO FORMAT ERRORS)
   let link =
-    "swish://payment?phone=" +
+    "https://app.swish.nu/1/p/sw?sw=" +
     swishNumber +
-    "&amount=" +
-    amount +
-    "&message=PixelForge";
+    "&msg=PixelForge";
 
   document.getElementById("qrcode").innerHTML = "";
 
