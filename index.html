@@ -12,11 +12,11 @@
       color: white;
     }
 
-    /* TOP NAV */
+    /* NAV BAR */
     .nav {
       display: flex;
       justify-content: center;
-      gap: 40px;
+      gap: 50px;
       padding: 20px;
       background: black;
       position: fixed;
@@ -30,12 +30,19 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
-      padding-bottom: 6px;
+      position: relative;
+      padding: 10px 0;
     }
 
-    /* WHITE LINE UNDER ACTIVE PAGE */
-    .active {
-      border-bottom: 2px solid white;
+    /* SMALL WHITE LINE UNDER ACTIVE TAB */
+    .nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: white;
     }
 
     /* PAGES */
@@ -49,14 +56,13 @@
       display: block;
     }
 
-    /* COOL BACKGROUND FOR ALL PAGES */
+    /* BACKGROUND */
     .hero {
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-
       background: linear-gradient(135deg, #0f1020, #1a1b3a, #0b0b0f);
     }
 
@@ -67,7 +73,6 @@
 
     .simple {
       font-size: 40px;
-      margin-top: 40px;
     }
   </style>
 </head>
@@ -104,14 +109,14 @@
 
 <script>
   function showPage(page) {
-    // hide pages
+    // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
     document.getElementById(page).classList.add('show');
 
-    // remove active underline
+    // remove active from all buttons
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
 
-    // add active underline to current button
+    // add active to current button
     document.getElementById(page + "Btn").classList.add('active');
   }
 </script>
