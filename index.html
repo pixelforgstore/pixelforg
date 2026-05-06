@@ -86,10 +86,6 @@ h1 {
   object-fit: cover;
 }
 
-.game-info {
-  padding: 12px;
-}
-
 /* ================= DONATE ================= */
 .donate-btn {
   position: fixed;
@@ -120,21 +116,13 @@ h1 {
   background: #1a1a1a;
   padding: 20px;
   border-radius: 12px;
-  position: relative;
 }
 
-.close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  cursor: pointer;
-}
-
-/* ================= GAME MODAL (EPIC STYLE) ================= */
+/* ================= EPIC FULLSCREEN GAME PAGE ================= */
 .game-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.88);
+  background: rgba(0,0,0,0.95);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,102 +138,97 @@ h1 {
   pointer-events: all;
 }
 
-/* BIG DARK PANEL */
-.game-panel {
-  width: 850px;
-  max-width: 95%;
-  background: #0f0f0f;
-  border-radius: 18px;
-  padding: 30px;
-  position: relative;
+/* FULL LAYOUT */
+.game-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 60px;
+  box-sizing: border-box;
 
-  transform: scale(0.95);
+  transform: scale(0.98);
   transition: 0.25s ease;
 }
 
-.game-overlay.show .game-panel {
+.game-overlay.show .game-page {
   transform: scale(1);
 }
 
 /* CLOSE */
 .close-game {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 22px;
+  top: 20px;
+  right: 30px;
+  font-size: 26px;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
-/* SMALLER IMAGE (IMPORTANT) */
-.game-banner {
-  width: 60%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* PLAY BUTTON (ONLY ONE, UNDER IMAGE) */
-.play-btn {
-  display: block;
-  margin: 20px auto 10px auto;
-
-  background: white;
-  color: black;
-  border: none;
-
-  padding: 14px 40px;
-  font-size: 16px;
-  font-weight: bold;
-
-  border-radius: 8px;
-  cursor: pointer;
-
-  transition: transform 0.2s ease;
-}
-
-.play-btn:hover {
-  transform: scale(1.05);
-}
-
-/* TEXT AREA */
-.game-content {
-  margin-top: 20px;
-  padding: 10px 40px 30px 40px;
-}
-
-.game-title-big {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.game-text {
-  color: #aaa;
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 180px;
-}
-
-/* QR animation */
-.qr-box {
-  margin-top: 15px;
-  opacity: 0;
-  transform: scale(0.85);
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.qr-box.show {
+.close-game:hover {
   opacity: 1;
-  transform: scale(1);
-  max-height: 300px;
 }
 
-.qr-box img {
-  width: 200px;
+/* LEFT IMAGE */
+.game-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-image {
+  height: 80vh;
+  width: auto;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* RIGHT SIDE */
+.game-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 60px;
+}
+
+/* TITLE */
+.game-title {
+  font-size: 70px;
+  margin: 0 0 20px 0;
+  letter-spacing: 2px;
+}
+
+/* BLUE PLAY BUTTON */
+.play-button {
+  width: 220px;
+  padding: 16px 0;
+
+  background: #0a84ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+
+  margin-bottom: 25px;
+
+  transition: 0.2s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.05);
+  background: #3aa0ff;
+}
+
+/* TEXT */
+.game-desc {
+  color: #aaa;
+  font-size: 16px;
+  max-width: 500px;
+  line-height: 1.6;
 }
 
 </style>
@@ -275,11 +258,8 @@ h1 {
   <div class="hero">
 
     <div class="game-container">
-      <div class="game-card" onclick="openGame('Firegame.png', 'FireFight')">
+      <div class="game-card" onclick="openGame('Firegame.png', 'Fire Fight')">
         <img src="Firegame.png">
-        <div class="game-info">
-          <p>FireFight</p>
-        </div>
       </div>
     </div>
 
@@ -297,40 +277,30 @@ h1 {
 <div class="overlay" id="overlay">
   <div class="popup">
     <div class="close" onclick="closeDonate()">✕</div>
-
     <h2>Donate</h2>
-
-    <select id="method" onchange="updateDonate()">
-      <option value="swish">Swish</option>
-      <option value="paypal">PayPal</option>
-    </select>
-
-    <div id="swishBox" class="qr-box show">
-      <img src="swishqrcode.jpg">
-    </div>
-
-    <div id="paypalBox" class="qr-box">
-      <p>PayPal coming soon</p>
-    </div>
   </div>
 </div>
 
-<!-- GAME MODAL -->
+<!-- GAME FULLSCREEN -->
 <div class="game-overlay" id="gameOverlay" onclick="closeGame(event)">
-  <div class="game-panel">
+  <div class="game-page">
 
     <div class="close-game" onclick="closeGame()">✕</div>
 
-    <img id="modalImg" class="game-banner">
+    <!-- LEFT -->
+    <div class="game-left">
+      <img id="modalImg" class="game-image">
+    </div>
 
-    <button class="play-btn">PLAY</button>
+    <!-- RIGHT -->
+    <div class="game-right">
+      <h1 class="game-title" id="modalTitle"></h1>
 
-    <div class="game-content">
-      <div class="game-title-big" id="modalTitle"></div>
+      <button class="play-button">PLAY</button>
 
-      <div class="game-text">
+      <p class="game-desc">
         <!-- later text -->
-      </div>
+      </p>
     </div>
 
   </div>
@@ -338,6 +308,7 @@ h1 {
 
 <script>
 
+/* NAV */
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
   document.getElementById(page).classList.add('show');
@@ -355,18 +326,7 @@ function closeDonate() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function updateDonate() {
-  let m = document.getElementById("method").value;
-
-  document.getElementById("swishBox").classList.remove("show");
-  document.getElementById("paypalBox").classList.remove("show");
-
-  setTimeout(() => {
-    document.getElementById(m === "swish" ? "swishBox" : "paypalBox").classList.add("show");
-  }, 50);
-}
-
-/* GAME MODAL */
+/* GAME */
 function openGame(img, title) {
   document.getElementById("modalImg").src = img;
   document.getElementById("modalTitle").innerText = title;
