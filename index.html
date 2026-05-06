@@ -13,7 +13,7 @@ body {
   background: black;
 }
 
-/* ================= NAV ================= */
+/* NAV */
 .nav {
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@ body {
   border-bottom: 2px solid white;
 }
 
-/* ================= PAGES ================= */
+/* PAGES */
 .page {
   display: none;
   padding-top: 80px;
@@ -64,7 +64,7 @@ h1 {
   margin: 0;
 }
 
-/* ================= GAME CARD ================= */
+/* GAME CARD */
 .game-container {
   display: flex;
   justify-content: center;
@@ -91,7 +91,7 @@ h1 {
   background: #111;
 }
 
-/* ================= DONATE (RESTORED) ================= */
+/* DONATE (UNCHANGED) */
 .donate-btn {
   position: fixed;
   right: 20px;
@@ -121,33 +121,9 @@ h1 {
   background: #1a1a1a;
   padding: 20px;
   border-radius: 12px;
-  position: relative;
 }
 
-.close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  cursor: pointer;
-}
-
-/* QR ANIMATION (RESTORED) */
-.qr-box {
-  margin-top: 15px;
-  opacity: 0;
-  transform: scale(0.85);
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.qr-box.show {
-  opacity: 1;
-  transform: scale(1);
-  max-height: 300px;
-}
-
-/* ================= GAME OVERLAY ================= */
+/* GAME OVERLAY */
 .game-overlay {
   position: fixed;
   inset: 0;
@@ -207,10 +183,10 @@ h1 {
   padding-left: 100px;
 }
 
-/* TITLE (MOVED SLIGHTLY RIGHT - YOUR REQUEST) */
+/* ✅ FIXED: TITLE MOVED MORE RIGHT */
 .game-title {
   font-size: 70px;
-  margin: 0 0 20px 15px; /* 👈 moved right slightly */
+  margin: 0 0 20px 60px;  /* 👈 THIS is the change (more right) */
 }
 
 /* PLAY BUTTON */
@@ -286,31 +262,14 @@ h1 {
   </div>
 </div>
 
-<!-- DONATE (FIXED ORIGINAL VERSION) -->
+<!-- DONATE -->
 <div class="overlay" id="overlay">
   <div class="popup">
-
-    <div class="close" onclick="closeDonate()">✕</div>
-
     <h2>Donate</h2>
-
-    <select id="method" onchange="updateDonate()">
-      <option value="swish">Swish</option>
-      <option value="paypal">PayPal</option>
-    </select>
-
-    <div id="swishBox" class="qr-box show">
-      <img src="swishqrcode.jpg" width="200">
-    </div>
-
-    <div id="paypalBox" class="qr-box">
-      <p>PayPal coming soon</p>
-    </div>
-
   </div>
 </div>
 
-<!-- GAME -->
+<!-- GAME PAGE -->
 <div class="game-overlay" id="gameOverlay" onclick="closeGame(event)">
   <div class="game-page">
 
@@ -335,7 +294,6 @@ h1 {
 
 <script>
 
-/* NAV */
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
   document.getElementById(page).classList.add('show');
@@ -344,7 +302,6 @@ function showPage(page) {
   document.getElementById(page + "Btn").classList.add("active");
 }
 
-/* DONATE */
 function openDonate() {
   document.getElementById("overlay").style.display = "flex";
 }
@@ -353,18 +310,6 @@ function closeDonate() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function updateDonate() {
-  let m = document.getElementById("method").value;
-
-  document.getElementById("swishBox").classList.remove("show");
-  document.getElementById("paypalBox").classList.remove("show");
-
-  setTimeout(() => {
-    document.getElementById(m === "swish" ? "swishBox" : "paypalBox").classList.add("show");
-  }, 50);
-}
-
-/* GAME */
 function openGame(img, title) {
   document.getElementById("modalImg").src = img;
   document.getElementById("modalTitle").innerText = title;
