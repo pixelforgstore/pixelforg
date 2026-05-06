@@ -195,13 +195,13 @@ select {
 }
 
 /* ========================= */
-/* EPIC GAMES STYLE MODAL */
+/* EPIC GAME PAGE MODAL */
 /* ========================= */
 
 .game-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.88);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,74 +217,103 @@ select {
   pointer-events: all;
 }
 
-/* MAIN PANEL */
+/* BIG PANEL */
 .game-panel {
-  width: 700px;
-  max-width: 92%;
-  background: #121212;
-  border-radius: 14px;
+  width: 900px;
+  max-width: 95%;
+  background: #0f0f0f;
+  border-radius: 18px;
   overflow: hidden;
 
-  transform: scale(0.9);
+  transform: scale(0.92);
   transition: transform 0.25s ease;
-  position: relative;
+
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
 }
 
 .game-overlay.show .game-panel {
   transform: scale(1);
 }
 
-/* BANNER IMAGE */
+/* HERO IMAGE AREA */
+.game-hero {
+  position: relative;
+  width: 100%;
+  height: 420px;
+}
+
+/* IMAGE */
 .game-banner {
   width: 100%;
-  height: 320px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* CONTENT */
-.game-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* PLAY BUTTON */
+/* BIG PLAY BUTTON */
 .play-btn {
-  background: white;
-  color: black;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+
+  font-size: 42px;
   font-weight: bold;
-  border-radius: 6px;
+
+  border: none;
+  background: rgba(255,255,255,0.95);
+  color: black;
+
   cursor: pointer;
-  width: 140px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .play-btn:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+  transform: translate(-50%, -50%) scale(1.08);
+  background: white;
 }
 
-/* TEXT PLACEHOLDER */
+/* CONTENT AREA */
+.game-content {
+  padding: 30px;
+  min-height: 260px;
+}
+
+.game-title-big {
+  font-size: 28px;
+  margin: 0 0 15px 0;
+}
+
 .game-text {
   color: #aaa;
-  font-size: 14px;
-  min-height: 60px;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 120px;
 }
 
 /* CLOSE BUTTON */
 .close-game {
   position: absolute;
-  top: 10px;
-  right: 14px;
-  font-size: 20px;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
   color: white;
   cursor: pointer;
   z-index: 10;
+  opacity: 0.8;
+}
+
+.close-game:hover {
+  opacity: 1;
 }
 
 </style>
@@ -314,7 +343,7 @@ select {
   <div class="hero">
 
     <div class="game-container">
-      <div class="game-card" onclick="openGame('Firegame.png')">
+      <div class="game-card" onclick="openGame('Firegame.png', 'FireFight')">
         <img src="Firegame.png" alt="Fire Game">
         <div class="game-info">
           <p class="game-title">FireFight</p>
@@ -361,10 +390,13 @@ select {
 
     <div class="close-game" onclick="closeGame()">✕</div>
 
-    <img id="modalImg" class="game-banner" src="" alt="Game">
+    <div class="game-hero">
+      <img id="modalImg" class="game-banner" src="" alt="Game">
+      <button class="play-btn">▶</button>
+    </div>
 
     <div class="game-content">
-      <button class="play-btn">PLAY</button>
+      <h2 class="game-title-big" id="modalTitle">Game</h2>
       <p class="game-text"></p>
     </div>
 
@@ -407,8 +439,9 @@ function updateDonate() {
 }
 
 /* GAME MODAL */
-function openGame(imgSrc) {
-  document.getElementById("modalImg").src = imgSrc;
+function openGame(img, title) {
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalTitle").innerText = title;
   document.getElementById("gameOverlay").classList.add("show");
 }
 
