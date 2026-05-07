@@ -91,7 +91,14 @@ h1 {
   background: #111;
 }
 
-/* ================= DONATE (CLEAN FIXED) ================= */
+/* FREE TEXT */
+.free-text {
+  font-size: 12px;
+  color: #00ff88;
+  margin-top: 5px;
+}
+
+/* DONATE */
 .donate-btn {
   position: fixed;
   right: 20px;
@@ -106,7 +113,7 @@ h1 {
   border-radius: 6px;
 }
 
-/* BACKDROP */
+/* OVERLAY */
 .overlay {
   position: fixed;
   inset: 0;
@@ -117,61 +124,7 @@ h1 {
   z-index: 100;
 }
 
-/* CLEAN MODERN BOX */
-.popup {
-  width: 320px;
-  background: #151515;
-  padding: 22px;
-  border-radius: 14px;
-  position: relative;
-  border: 1px solid #2a2a2a;
-}
-
-/* CLOSE */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  cursor: pointer;
-  opacity: 0.7;
-}
-.close:hover { opacity: 1; }
-
-/* DROPDOWN CLEAN */
-select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 12px;
-  background: #0f0f0f;
-  border: 1px solid #333;
-  color: white;
-  border-radius: 8px;
-  outline: none;
-}
-
-/* QR ANIMATION */
-.qr-box {
-  margin-top: 15px;
-  opacity: 0;
-  transform: scale(0.9);
-  max-height: 0;
-  overflow: hidden;
-  transition: 0.25s ease;
-  text-align: center;
-}
-
-.qr-box.show {
-  opacity: 1;
-  transform: scale(1);
-  max-height: 300px;
-}
-
-.qr-box img {
-  width: 200px;
-  border-radius: 10px;
-}
-
-/* ================= GAME OVERLAY ================= */
+/* GAME OVERLAY (ANIMATION ADDED) */
 .game-overlay {
   position: fixed;
   inset: 0;
@@ -181,6 +134,7 @@ select {
   align-items: center;
 
   opacity: 0;
+  transform: scale(0.9);
   pointer-events: none;
   transition: 0.25s ease;
   z-index: 200;
@@ -188,9 +142,11 @@ select {
 
 .game-overlay.show {
   opacity: 1;
+  transform: scale(1);
   pointer-events: all;
 }
 
+/* GAME PAGE */
 .game-page {
   width: 100%;
   height: 100%;
@@ -199,7 +155,6 @@ select {
   box-sizing: border-box;
 }
 
-/* CLOSE */
 .close-game {
   position: absolute;
   top: 20px;
@@ -208,7 +163,6 @@ select {
   cursor: pointer;
 }
 
-/* LEFT IMAGE */
 .game-left {
   flex: 1;
   display: flex;
@@ -221,45 +175,39 @@ select {
   border-radius: 14px;
 }
 
-/* RIGHT SIDE */
 .game-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   padding-left: 120px;
 }
 
-/* 🔥 FIX: TITLE MORE TO RIGHT */
 .game-title {
   font-size: 70px;
-  margin: 0 0 12px 80px; /* moved right properly */
-  letter-spacing: 2px;
+  margin: 0 0 12px 80px;
 }
 
-/* 🔥 PLAY BUTTON RIGHT UNDER TITLE */
+/* START BUTTON UPDATED */
 .play-button {
   width: 220px;
   padding: 16px 0;
-
   background: #0a84ff;
   color: white;
   border: none;
   border-radius: 10px;
-
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-
-  margin: 0 0 25px 80px; /* aligned with title */
+  margin: 0 0 25px 80px;
+  transition: 0.2s;
 }
 
 .play-button:hover {
   background: #3aa0ff;
+  transform: scale(1.05);
 }
 
-/* TEXT */
 .game-desc {
   color: #aaa;
   max-width: 500px;
@@ -279,7 +227,6 @@ select {
   <button id="shopBtn" onclick="showPage('shop')">Shop</button>
 </div>
 
-<!-- DONATE -->
 <button class="donate-btn" onclick="openDonate()">Donate</button>
 
 <!-- HOME -->
@@ -298,6 +245,7 @@ select {
         <img src="Firegame.png">
         <div class="game-info">
           <p>Fire Fight</p>
+          <div class="free-text">Free</div>
         </div>
       </div>
     </div>
@@ -312,32 +260,9 @@ select {
   </div>
 </div>
 
-<!-- DONATE (CLEAN) -->
-<div class="overlay" id="overlay">
-  <div class="popup">
+<!-- GAME OVERLAY -->
+<div class="game-overlay" id="gameOverlay">
 
-    <div class="close" onclick="closeDonate()">✕</div>
-
-    <h3>Donate</h3>
-
-    <select id="method" onchange="updateDonate()">
-      <option value="swish">Swish</option>
-      <option value="paypal">PayPal</option>
-    </select>
-
-    <div id="swishBox" class="qr-box show">
-      <img src="swishqrcode.jpg">
-    </div>
-
-    <div id="paypalBox" class="qr-box">
-      <p>PayPal coming soon</p>
-    </div>
-
-  </div>
-</div>
-
-<!-- GAME -->
-<div class="game-overlay" id="gameOverlay" onclick="closeGame(event)">
   <div class="game-page">
 
     <div class="close-game" onclick="closeGame()">✕</div>
@@ -350,18 +275,19 @@ select {
 
       <h1 class="game-title" id="modalTitle"></h1>
 
-      <button class="play-button">PLAY</button>
+      <!-- START BUTTON NOW OPENS GAME -->
+      <button class="play-button" onclick="startGame()">START</button>
 
-      <p class="game-desc"></p>
+      <p class="game-desc">Click start to launch the game.</p>
 
     </div>
 
   </div>
+
 </div>
 
 <script>
 
-/* NAV */
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
   document.getElementById(page).classList.add('show');
@@ -370,36 +296,24 @@ function showPage(page) {
   document.getElementById(page + "Btn").classList.add("active");
 }
 
-/* DONATE */
-function openDonate() {
-  document.getElementById("overlay").style.display = "flex";
-}
-
-function closeDonate() {
-  document.getElementById("overlay").style.display = "none";
-}
-
-function updateDonate() {
-  let m = document.getElementById("method").value;
-
-  document.getElementById("swishBox").classList.remove("show");
-  document.getElementById("paypalBox").classList.remove("show");
-
-  setTimeout(() => {
-    document.getElementById(m === "swish" ? "swishBox" : "paypalBox").classList.add("show");
-  }, 50);
-}
-
-/* GAME */
+/* OPEN GAME MODAL */
 function openGame(img, title) {
   document.getElementById("modalImg").src = img;
   document.getElementById("modalTitle").innerText = title;
   document.getElementById("gameOverlay").classList.add("show");
 }
 
-function closeGame(e) {
-  if (!e || e.target.id === "gameOverlay" || e.target.classList.contains("close-game")) {
-    document.getElementById("gameOverlay").classList.remove("show");
+/* CLOSE */
+function closeGame() {
+  document.getElementById("gameOverlay").classList.remove("show");
+}
+
+/* START GAME (FULLSCREEN TAB) */
+function startGame() {
+  const game = window.open("mygame/", "_blank");
+
+  if (game) {
+    game.focus();
   }
 }
 
